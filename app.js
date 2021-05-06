@@ -1,25 +1,34 @@
-const req = require("request");
+const request = require("request");
+const geocode = require("./utils/geocode");
 
-const url = "http://api.weatherstack.com/";
-const endpoint = `${url}/current?access_key=49113a4a16e82ca70a251870b240d777&query=37.8267,-122.4233&units=m`;
+// const url =
+//   "http://api.weatherstack.com/current?access_key=e84129bc20b99e3b1452c36379b4e3ff&query=42.3605,-71.0596&units=m";
 
-req({ url: endpoint, json: true }, (err, res) => {
-  if (!err) {
-    const data = res.body.current;
-    console.log(`Weather = ${data.weather_descriptions[0]}
-    \nTemperature = ${data.temperature}C
-    \nFeels Like = ${data.feelslike}C`);
-  } else
-    res.body.error
-      ? console.log("Unable to find location")
-      : console.log("Unable to connect to weather service!");
-});
-
-// const geocoding =
-//   "https://api.mapbox.com/geocoding/v5/mapbox.places/Los%20Angeles.json?access_token=pk.eyJ1IjoiZGltYXMtYW5kaGsiLCJhIjoiY2tucjZzYTJwMDZvNzMyb3J4M3dud3RjNCJ9.y4qwU8nSYCY_kIQhjA1PCw&limit=1";
-// req({ url: geocoding, json: true }, (err, res) => {
-//   const locationResult = res.body.features[0];
-//   const latitude = locationResult.center[1];
-//   const longtitude = locationResult.center[0];
-//   console.log(latitude, longtitude);
+// request({ url: url, json: true }, (error, response) => {
+//   if (error) {
+//     console.log("Unable to connect to weather service!");
+//   } else if (response.body.error) {
+//     console.log("Unable to find location");
+//   } else {
+//     console.log(
+//       `${response.body.current.weather_descriptions[0]}. It is currently ${response.body.current.temperature}C degress out.`
+//     );
+//   }
 // });
+
+// request({ url: geocodeURL, json: true }, (error, response) => {
+//   if (error) {
+//     console.log("Unable to connect to location services!");
+//   } else if (response.body.features.length === 0) {
+//     console.log("Unable to find location. Try another search.");
+//   } else {
+//     const latitude = response.body.features[0].center[0];
+//     const longitude = response.body.features[0].center[1];
+//     console.log(latitude, longitude);
+//   }
+// });
+
+geocode("Pekanbaru", (err, res) => {
+  console.log("Err:", err);
+  console.log("Res:", res);
+});
